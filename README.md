@@ -194,21 +194,21 @@ public class Rajdeep {
 
 <td width="50%">
 
-<h3 align="center">🤖 HiveLogic</h3>
+<h3 align="center">🕵️ AI Visual Manipulation Detector</h3>
 
 <p align="center">
 
-AI-powered Financial Intelligence Platform
+Lightweight Computer Vision System
 
 <br><br>
 
-✔ Multi-Agent Architecture
+✔ Image Splicing Detection
 
-✔ RAG Pipeline
+✔ Deepfake Detection
 
-✔ SEC EDGAR Integration
+✔ OpenCV & Python
 
-✔ AI Report Generation
+✔ CPU Optimized
 
 </p>
 
@@ -216,21 +216,21 @@ AI-powered Financial Intelligence Platform
 
 <td width="50%">
 
-<h3 align="center">🧠 EchoMind</h3>
+<h3 align="center">🤟 Sign-Speak ASL Translator</h3>
 
 <p align="center">
 
-AI Memory Assistant
+Real-Time Sign Language Recognition
 
 <br><br>
 
-✔ Dementia Care
+✔ TensorFlow
 
-✔ Voice Recognition
+✔ MediaPipe
 
-✔ AI Story Generation
+✔ OpenCV
 
-✔ Caregiver Dashboard
+✔ Flask Web App
 
 </p>
 
@@ -242,21 +242,21 @@ AI Memory Assistant
 
 <td width="50%">
 
-<h3 align="center">👕 AI Virtual Try-On</h3>
+<h3 align="center">🧠 Cognicare Health Portal</h3>
 
 <p align="center">
 
-Computer Vision Project
+AI Companion for Dementia Care
 
 <br><br>
 
-✔ Deep Learning
+✔ Voice Storytelling
 
-✔ Image Segmentation
+✔ Memory Timeline
 
-✔ Cloth Transfer
+✔ Caregiver Dashboard
 
-✔ GAN Models
+✔ AI Health Assistant
 
 </p>
 
@@ -264,21 +264,21 @@ Computer Vision Project
 
 <td width="50%">
 
-<h3 align="center">📚 Java DSA</h3>
+<h3 align="center">📖 Storytelling Dementia</h3>
 
 <p align="center">
 
-Complete DSA Repository
+AI Memory & Story Generation Platform
 
 <br><br>
 
-✔ LeetCode
+✔ Voice Recognition
 
-✔ Interview Questions
+✔ Emotional Insights
 
-✔ Algorithms
+✔ Memory Maps
 
-✔ Competitive Programming
+✔ AI Story Logs
 
 </p>
 
@@ -287,8 +287,6 @@ Complete DSA Repository
 </tr>
 
 </table>
-
----
 
 
 
