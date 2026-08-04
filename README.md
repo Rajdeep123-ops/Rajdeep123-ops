@@ -1,11 +1,480 @@
-<div align="center">
+<!-- =======================================================
+      RAJDEEP MOULIK - GITHUB PROFILE README
+======================================================= -->
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=250&color=gradient&customColorList=6,11,20,24,30&section=header&text=Rajdeep%20Moulik&fontSize=50&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Software%20Engineer%20|%20AI%20Developer&descAlignY=60"/>
 
-  <h1>Built with AI Studio</h2>
+<h1 align="center">Hi 👋, I'm Rajdeep Moulik</h1>
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+<h3 align="center">
+🚀 Software Engineer | AI Developer | Full Stack Developer
+</h3>
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+<p align="center">
 
-</div>
+<img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=24&duration=3500&pause=1000&color=6C63FF&center=true&vCenter=true&width=850&lines=Welcome+to+my+GitHub!;Software+Engineer;AI+Developer;Java+Developer;Spring+Boot+Developer;React+Developer;Open+Source+Enthusiast;Always+Learning+New+Technologies" />
+
+</p>
+
+---
+
+## 🌐 Connect With Me
+
+<p align="center">
+
+<a href="https://www.linkedin.com/in/rajdeep-moulik-09486928b/" target="_blank">
+<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
+</a>
+
+<a href="https://github.com/Rajdeep123-ops">
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
+</a>
+
+<a href="mailto:yourmail@gmail.com">
+<img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white"/>
+</a>
+
+</p>
+
+---
+
+<p align="center">
+
+<img src="https://komarev.com/ghpvc/?username=Rajdeep123-ops&label=Profile%20Views&color=6C63FF&style=for-the-badge"/>
+
+</p>
+
+---
+
+# 💫 About Me
+
+```java
+public class Rajdeep {
+
+    String role = "Software Engineer";
+
+    String[] interests = {
+        "Artificial Intelligence",
+        "Backend Development",
+        "Full Stack Development",
+        "Machine Learning",
+        "Cloud Computing"
+    };
+
+    String currentFocus =
+        "Building scalable AI applications using Java, Spring Boot, React and Python.";
+
+}
+```
+
+- 🎓 Computer Science Engineering Student
+- 💻 Passionate Software Engineer
+- 🤖 AI & Machine Learning Enthusiast
+- 🌱 Learning Distributed Systems & Cloud
+- 🚀 Building Intelligent AI Systems
+- 📚 Solving DSA Daily
+- 🔥 Open Source Learner
+
+---
+
+# ⚡ Tech Stack
+
+<p align="center">
+
+<img src="https://skillicons.dev/icons?i=java,spring,react,nodejs,python,c,cpp,js,ts,html,css,tailwind,mysql,mongodb,postgres,docker,git,github,aws,firebase,linux,vscode,idea,postman,tensorflow"/>
+
+</p>
+
+---
+
+# 🛠 Languages
+
+<p>
+
+<img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk"/>
+
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python"/>
+
+<img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c"/>
+
+<img src="https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus"/>
+
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+
+</p>
+
+---
+
+# ⚙ Backend
+
+<p>
+
+<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring"/>
+
+<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi"/>
+
+<img src="https://img.shields.io/badge/REST_API-FF6F00?style=for-the-badge"/>
+
+</p>
+
+---
+
+# 🎨 Frontend
+
+<p>
+
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react"/>
+
+<img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5"/>
+
+<img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3"/>
+
+<img src="https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=tailwindcss"/>
+
+</p>
+
+---
+
+# 🗄 Databases
+
+<p>
+
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql"/>
+
+<img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb"/>
+
+<img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql"/>
+
+</p>
+
+---
+
+# 🤖 AI / ML
+
+<p>
+
+<img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow"/>
+
+<img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv"/>
+
+<img src="https://img.shields.io/badge/Scikit_Learn-F7931E?style=for-the-badge&logo=scikitlearn"/>
+
+</p>
+
+---
+
+# 📊 GitHub Statistics
+
+<p align="center">
+
+<img width="49%" src="https://github-readme-stats.vercel.app/api?username=Rajdeep123-ops&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&include_all_commits=true"/>
+
+<img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Rajdeep123-ops&layout=compact&theme=tokyonight&hide_border=true"/>
+
+</p>
+
+---
+
+# 🔥 GitHub Streak
+
+<p align="center">
+
+<img src="https://streak-stats.demolab.com?user=Rajdeep123-ops&theme=tokyonight&hide_border=true"/>
+
+</p>
+
+---
+
+# 📈 Contribution Graph
+
+<p align="center">
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=Rajdeep123-ops&theme=tokyo-night&hide_border=true"/>
+
+</p>
+
+---
+
+# 🏆 GitHub Trophies
+
+<p align="center">
+
+<img src="https://github-profile-trophy.vercel.app/?username=Rajdeep123-ops&theme=tokyonight&no-frame=true&row=2&column=4"/>
+
+</p>
+
+---
+
+# 🐍 Contribution Snake
+
+<p align="center">
+
+<img src="https://raw.githubusercontent.com/Rajdeep123-ops/Rajdeep123-ops/output/github-contribution-grid-snake-dark.svg">
+
+</p>
+
+---
+
+# 📈 GitHub Metrics
+
+<p align="center">
+
+<img src="./github-metrics.svg"/>
+
+</p>
+
+---
+
+# 🌍 3D Contribution Graph
+
+<p align="center">
+
+<img src="./profile-3d-contrib/profile-night-rainbow.svg"/>
+
+</p>
+
+---
+
+# 📊 Profile Summary
+
+<p align="center">
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Rajdeep123-ops&theme=tokyonight"/>
+
+</p>
+
+---
+
+# ⚡ Productive Time
+
+<p align="center">
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=Rajdeep123-ops&theme=tokyonight&utcOffset=5.5"/>
+
+</p>
+
+---
+
+# 🛠 Top Languages Card
+
+<p align="center">
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Rajdeep123-ops&theme=tokyonight"/>
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Rajdeep123-ops&theme=tokyonight"/>
+
+</p>
+
+---
+
+# 📌 Featured Projects
+
+<table>
+
+<tr>
+
+<td width="50%">
+
+<h3 align="center">🤖 HiveLogic</h3>
+
+<p align="center">
+
+AI-powered Financial Intelligence Platform
+
+<br><br>
+
+✔ Multi-Agent Architecture
+
+✔ RAG Pipeline
+
+✔ SEC EDGAR Integration
+
+✔ AI Report Generation
+
+</p>
+
+</td>
+
+<td width="50%">
+
+<h3 align="center">🧠 EchoMind</h3>
+
+<p align="center">
+
+AI Memory Assistant
+
+<br><br>
+
+✔ Dementia Care
+
+✔ Voice Recognition
+
+✔ AI Story Generation
+
+✔ Caregiver Dashboard
+
+</p>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td width="50%">
+
+<h3 align="center">👕 AI Virtual Try-On</h3>
+
+<p align="center">
+
+Computer Vision Project
+
+<br><br>
+
+✔ Deep Learning
+
+✔ Image Segmentation
+
+✔ Cloth Transfer
+
+✔ GAN Models
+
+</p>
+
+</td>
+
+<td width="50%">
+
+<h3 align="center">📚 Java DSA</h3>
+
+<p align="center">
+
+Complete DSA Repository
+
+<br><br>
+
+✔ LeetCode
+
+✔ Interview Questions
+
+✔ Algorithms
+
+✔ Competitive Programming
+
+</p>
+
+</td>
+
+</tr>
+
+</table>
+
+---
+
+# 📦 Repository Cards
+
+<p align="center">
+
+<a href="https://github.com/Rajdeep123-ops/HiveLogic">
+
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=Rajdeep123-ops&repo=HiveLogic&theme=tokyonight"/>
+
+</a>
+
+</p>
+
+---
+
+# 🚀 Current Focus
+
+```text
+✔ Artificial Intelligence
+
+✔ Spring Boot
+
+✔ React
+
+✔ Distributed Systems
+
+✔ Cloud Computing
+
+✔ System Design
+
+✔ Data Structures & Algorithms
+
+✔ Open Source
+```
+
+---
+
+# 🎯 2026 Goals
+
+- 🚀 Crack Top Product-Based Companies
+- 🤖 Build Enterprise AI Applications
+- 🌍 Contribute to Open Source
+- 📚 Master System Design
+- ☁ Learn AWS Cloud
+- 🏆 500+ DSA Problems
+- 📈 Improve GitHub Profile
+
+---
+
+# 🤝 Open Source
+
+- 🌱 Hacktoberfest
+- 🔥 Good First Issues
+- 💡 Community Contributions
+- 📦 Open Source Projects
+
+---
+
+# 💡 Daily Motivation
+
+<p align="center">
+
+<img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight"/>
+
+</p>
+
+> **"First, solve the problem. Then, write the code."**  
+> — John Johnson
+
+---
+
+# 💻 Coding
+
+<p align="center">
+
+<img width="450" src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif">
+
+</p>
+
+---
+
+# 🗓 Contribution Calendar
+
+<p align="center">
+
+<img src="https://ghchart.rshah.org/7C3AED/Rajdeep123-ops"/>
+
+</p>
+
+---
+
+# 🌟 Thanks For Visiting
+
+<h3 align="center">
+
+⭐ If you like my work, consider starring my repositories!
+
+</h3>
+
+<h4 align="center">
+
+Let's Connect & Build Amazing Projects Together 🚀
+
+</h4>
+
+---
+
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&section=footer&color=gradient&customColorList=6,11,20,24,30"/>
