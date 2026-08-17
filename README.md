@@ -164,17 +164,6 @@ public class Rajdeep {
 ---
 
 
-
-# 🔥 GitHub Streak
-
-<p align="center">
-
-<img src="https://streak-stats.demolab.com?user=Rajdeep123-ops&theme=tokyonight&hide_border=true"/>
-
-</p>
-
----
-
 # 📈 Contribution Graph
 
 <p align="center">
