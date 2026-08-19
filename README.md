@@ -168,13 +168,7 @@ public class Rajdeep {
 
 # 📈 Contribution Graph
 
-<p align="center">
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Rajdeep123-ops&theme=tokyo-night&hide_border=true"/>
-
-</p>
-
----
+<img src="https://ghchart.rshah.org/6C63FF/Rajdeep123-ops" alt="Rajdeep's Contribution Graph" />
 
 
 
