@@ -215,15 +215,7 @@ public class Rajdeep {
 
 ---
 
-# 📈 GitHub Metrics
 
-<p align="center">
-
-<img src="./github-metrics.svg"/>
-
-</p>
-
----
 
 # 🌍 3D Contribution Graph
 
