@@ -163,6 +163,27 @@ public class Rajdeep {
 
 ---
 
+# 📊 GitHub Statistics
+
+<p align="center">
+
+<img width="49%" src="https://github-readme-stats.vercel.app/api?username=Rajdeep123-ops&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&include_all_commits=true"/>
+
+<img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Rajdeep123-ops&layout=compact&theme=tokyonight&hide_border=true"/>
+
+</p>
+
+---
+
+# 🔥 GitHub Streak
+
+<p align="center">
+
+<img src="https://streak-stats.demolab.com?user=Rajdeep123-ops&theme=tokyonight&hide_border=true"/>
+
+</p>
+
+---
 
 # 📈 Contribution Graph
 
@@ -174,6 +195,77 @@ public class Rajdeep {
 
 ---
 
+# 🏆 GitHub Trophies
+
+<p align="center">
+
+<img src="https://github-profile-trophy.vercel.app/?username=Rajdeep123-ops&theme=tokyonight&no-frame=true&row=2&column=4"/>
+
+</p>
+
+---
+
+# 🐍 Contribution Snake
+
+<p align="center">
+
+<img src="https://raw.githubusercontent.com/Rajdeep123-ops/Rajdeep123-ops/output/github-contribution-grid-snake-dark.svg">
+
+</p>
+
+---
+
+# 📈 GitHub Metrics
+
+<p align="center">
+
+<img src="./github-metrics.svg"/>
+
+</p>
+
+---
+
+# 🌍 3D Contribution Graph
+
+<p align="center">
+
+<img src="./profile-3d-contrib/profile-night-rainbow.svg"/>
+
+</p>
+
+---
+
+# 📊 Profile Summary
+
+<p align="center">
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Rajdeep123-ops&theme=tokyonight"/>
+
+</p>
+
+---
+
+# ⚡ Productive Time
+
+<p align="center">
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=Rajdeep123-ops&theme=tokyonight&utcOffset=5.5"/>
+
+</p>
+
+---
+
+# 🛠 Top Languages Card
+
+<p align="center">
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Rajdeep123-ops&theme=tokyonight"/>
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Rajdeep123-ops&theme=tokyonight"/>
+
+</p>
+
+---
 
 # 📌 Featured Projects
 
@@ -183,21 +275,21 @@ public class Rajdeep {
 
 <td width="50%">
 
-<h3 align="center">🕵️ AI Visual Manipulation Detector</h3>
+<h3 align="center">🤖 HiveLogic</h3>
 
 <p align="center">
 
-Lightweight Computer Vision System
+AI-powered Financial Intelligence Platform
 
 <br><br>
 
-✔ Image Splicing Detection
+✔ Multi-Agent Architecture
 
-✔ Deepfake Detection
+✔ RAG Pipeline
 
-✔ OpenCV & Python
+✔ SEC EDGAR Integration
 
-✔ CPU Optimized
+✔ AI Report Generation
 
 </p>
 
@@ -205,21 +297,21 @@ Lightweight Computer Vision System
 
 <td width="50%">
 
-<h3 align="center">🤟 Sign-Speak ASL Translator</h3>
+<h3 align="center">🧠 EchoMind</h3>
 
 <p align="center">
 
-Real-Time Sign Language Recognition
+AI Memory Assistant
 
 <br><br>
 
-✔ TensorFlow
+✔ Dementia Care
 
-✔ MediaPipe
+✔ Voice Recognition
 
-✔ OpenCV
+✔ AI Story Generation
 
-✔ Flask Web App
+✔ Caregiver Dashboard
 
 </p>
 
@@ -231,21 +323,21 @@ Real-Time Sign Language Recognition
 
 <td width="50%">
 
-<h3 align="center">🧠 Cognicare Health Portal</h3>
+<h3 align="center">👕 AI Virtual Try-On</h3>
 
 <p align="center">
 
-AI Companion for Dementia Care
+Computer Vision Project
 
 <br><br>
 
-✔ Voice Storytelling
+✔ Deep Learning
 
-✔ Memory Timeline
+✔ Image Segmentation
 
-✔ Caregiver Dashboard
+✔ Cloth Transfer
 
-✔ AI Health Assistant
+✔ GAN Models
 
 </p>
 
@@ -253,21 +345,21 @@ AI Companion for Dementia Care
 
 <td width="50%">
 
-<h3 align="center">📖 Storytelling Dementia</h3>
+<h3 align="center">📚 Java DSA</h3>
 
 <p align="center">
 
-AI Memory & Story Generation Platform
+Complete DSA Repository
 
 <br><br>
 
-✔ Voice Recognition
+✔ LeetCode
 
-✔ Emotional Insights
+✔ Interview Questions
 
-✔ Memory Maps
+✔ Algorithms
 
-✔ AI Story Logs
+✔ Competitive Programming
 
 </p>
 
@@ -277,7 +369,21 @@ AI Memory & Story Generation Platform
 
 </table>
 
+---
 
+# 📦 Repository Cards
+
+<p align="center">
+
+<a href="https://github.com/Rajdeep123-ops/HiveLogic">
+
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=Rajdeep123-ops&repo=HiveLogic&theme=tokyonight"/>
+
+</a>
+
+</p>
+
+---
 
 # 🚀 Current Focus
 
