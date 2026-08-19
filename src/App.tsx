@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   FileText, 
   Folder, 
@@ -18,7 +18,13 @@ import {
   Award, 
   BarChart2, 
   Zap,
-  Info
+  Info,
+  Play,
+  Pause,
+  RotateCcw,
+  Sliders,
+  CheckCircle2,
+  HelpCircle
 } from 'lucide-react';
 
 const README_CONTENT = `<!-- =======================================================
@@ -508,36 +514,35 @@ const SNAKE_YML = `name: Generate Snake
 on:
   schedule:
     - cron: "0 */12 * * *"
-
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
+      - uses: actions/checkout@v4
 
       - uses: Platane/snk@v3
-
         with:
-
           github_user_name: Rajdeep123-ops
-
           outputs: |
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+            dist/github-contribution-grid-snake.gif
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 
       - uses: crazy-max/ghaction-github-pages@v4
-
         with:
-
           target_branch: output
-
           build_dir: dist
-
         env:
-
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 `;
 
@@ -676,6 +681,530 @@ const FILES: Record<FileKey, FileItem> = {
     description: 'GitHub Action workflow to render 3D contribution graph cards on GitHub Pages.'
   }
 };
+
+interface SnakeCell {
+  x: number;
+  y: number;
+}
+
+const COLS = 53;
+const ROWS = 7;
+
+function generateRealisticGrid(): number[][] {
+  const grid: number[][] = [];
+  for (let x = 0; x < COLS; x++) {
+    const col: number[] = [];
+    for (let y = 0; y < ROWS; y++) {
+      // Create natural clusters of contributions (higher in middle/recent weeks)
+      const isWeekend = y === 0 || y === 6;
+      const baseProb = x > 15 ? 0.65 : 0.4;
+      if (Math.random() < (isWeekend ? baseProb * 0.5 : baseProb)) {
+        col.push(Math.floor(Math.random() * 4) + 1);
+      } else {
+        col.push(0);
+      }
+    }
+    grid.push(col);
+  }
+  return grid;
+}
+
+function MovingSnakeGrid() {
+  const [grid, setGrid] = useState<number[][]>(() => generateRealisticGrid());
+  const [snake, setSnake] = useState<SnakeCell[]>([
+    { x: 38, y: 3 },
+    { x: 37, y: 3 },
+    { x: 36, y: 3 },
+    { x: 35, y: 3 },
+    { x: 34, y: 3 }
+  ]);
+  const [direction, setDirection] = useState<'UP' | 'DOWN' | 'LEFT' | 'RIGHT'>('RIGHT');
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [speed, setSpeed] = useState<number>(75); // ms per step
+  const [theme, setTheme] = useState<'cyan' | 'green' | 'purple'>('cyan');
+  const [eatenCount, setEatenCount] = useState<number>(0);
+  const [totalDots, setTotalDots] = useState<number>(() => 120);
+  const [showHowTo, setShowHowTo] = useState<boolean>(false);
+  const dirRef = useRef<'UP' | 'DOWN' | 'LEFT' | 'RIGHT'>('RIGHT');
+  dirRef.current = direction;
+
+  const resetGame = useCallback(() => {
+    const newGrid = generateRealisticGrid();
+    setGrid(newGrid);
+    let count = 0;
+    for (let x = 0; x < COLS; x++) {
+      for (let y = 0; y < ROWS; y++) {
+        if (newGrid[x][y] > 0) count++;
+      }
+    }
+    setTotalDots(count || 100);
+    setEatenCount(0);
+    const startX = 35;
+    const startY = 3;
+    setSnake([
+      { x: startX, y: startY },
+      { x: startX - 1, y: startY },
+      { x: startX - 2, y: startY },
+      { x: startX - 3, y: startY },
+      { x: startX - 4, y: startY }
+    ]);
+    setDirection('RIGHT');
+  }, []);
+
+  // Main snake animation tick
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const interval = setInterval(() => {
+      setSnake(prevSnake => {
+        const head = prevSnake[0];
+        if (!head) return prevSnake;
+
+        // Autonomous pathfinding: Find closest dot with level > 0
+        let targetX = -1;
+        let targetY = -1;
+        let minDist = Infinity;
+
+        // Search near the snake head first
+        for (let x = 0; x < COLS; x++) {
+          for (let y = 0; y < ROWS; y++) {
+            if (grid[x] && grid[x][y] > 0) {
+              const dist = Math.abs(x - head.x) + Math.abs(y - head.y);
+              if (dist < minDist) {
+                minDist = dist;
+                targetX = x;
+                targetY = y;
+              }
+            }
+          }
+        }
+
+        // If no dots left, respawn
+        if (targetX === -1) {
+          setTimeout(resetGame, 100);
+          return prevSnake;
+        }
+
+        // Decide next step direction towards target
+        const currentDir = dirRef.current;
+        const validMoves: Array<{ dir: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT'; x: number; y: number }> = [];
+
+        const candidates: Array<{ dir: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT'; dx: number; dy: number; opposite: string }> = [
+          { dir: 'RIGHT', dx: 1, dy: 0, opposite: 'LEFT' },
+          { dir: 'LEFT', dx: -1, dy: 0, opposite: 'RIGHT' },
+          { dir: 'DOWN', dx: 0, dy: 1, opposite: 'UP' },
+          { dir: 'UP', dx: 0, dy: -1, opposite: 'DOWN' }
+        ];
+
+        for (const cand of candidates) {
+          if (currentDir === cand.opposite && prevSnake.length > 1) continue;
+          let nx = head.x + cand.dx;
+          let ny = head.y + cand.dy;
+
+          // Wrap around or clamp within bounds
+          if (nx < 0) nx = COLS - 1;
+          if (nx >= COLS) nx = 0;
+          if (ny < 0) ny = ROWS - 1;
+          if (ny >= ROWS) ny = 0;
+
+          // Avoid immediate body self-collision
+          const hitsBody = prevSnake.slice(0, -1).some(segment => segment.x === nx && segment.y === ny);
+          if (!hitsBody) {
+            validMoves.push({ dir: cand.dir, x: nx, y: ny });
+          }
+        }
+
+        // Choose move that minimizes Manhattan distance to target
+        let bestMove = validMoves[0];
+        if (!bestMove) {
+          // Fallback if cornered
+          const fbX = (head.x + 1) % COLS;
+          bestMove = { dir: 'RIGHT', x: fbX, y: head.y };
+        } else {
+          let bestDist = Infinity;
+          for (const move of validMoves) {
+            const d = Math.abs(move.x - targetX) + Math.abs(move.y - targetY);
+            if (d < bestDist) {
+              bestDist = d;
+              bestMove = move;
+            }
+          }
+        }
+
+        setDirection(bestMove.dir);
+        const newHead = { x: bestMove.x, y: bestMove.y };
+
+        // Check if eaten
+        let didEat = false;
+        if (grid[newHead.x] && grid[newHead.x][newHead.y] > 0) {
+          didEat = true;
+          setGrid(g => {
+            const next = g.map(c => [...c]);
+            next[newHead.x][newHead.y] = 0;
+            return next;
+          });
+          setEatenCount(c => c + 1);
+        }
+
+        // Move body
+        const maxLen = 14;
+        let newSnake: SnakeCell[];
+        if (didEat && prevSnake.length < maxLen) {
+          newSnake = [newHead, ...prevSnake];
+        } else {
+          newSnake = [newHead, ...prevSnake.slice(0, -1)];
+        }
+
+        return newSnake;
+      });
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [isPlaying, speed, grid, resetGame]);
+
+  // Color palettes
+  const colorMap = {
+    cyan: {
+      head: '#00d8ff',
+      body: '#00b4d8',
+      trail: '#0077b6',
+      eye: '#ffffff',
+      empty: '#161b22',
+      levels: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+      badge: 'Cyan Neon',
+      progress1: '#00d8ff',
+      progress2: '#26a641',
+      progress3: '#0e4429'
+    },
+    green: {
+      head: '#39d353',
+      body: '#26a641',
+      trail: '#006d32',
+      eye: '#ffffff',
+      empty: '#161b22',
+      levels: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+      badge: 'Classic Green',
+      progress1: '#39d353',
+      progress2: '#26a641',
+      progress3: '#0e4429'
+    },
+    purple: {
+      head: '#c084fc',
+      body: '#a855f7',
+      trail: '#7e22ce',
+      eye: '#ffffff',
+      empty: '#161b22',
+      levels: ['#161b22', '#3b0764', '#6b21a8', '#9333ea', '#c084fc'],
+      badge: 'Cyber Purple',
+      progress1: '#c084fc',
+      progress2: '#9333ea',
+      progress3: '#3b0764'
+    }
+  }[theme];
+
+  const cellWidth = 11;
+  const cellGap = 3;
+  const svgWidth = COLS * (cellWidth + cellGap) + 16;
+  const svgHeight = ROWS * (cellWidth + cellGap) + 38;
+
+  const eatenPercent = Math.min(100, Math.round((eatenCount / Math.max(1, totalDots)) * 100));
+
+  return (
+    <div className="w-full bg-[#0d1117] border border-[#30363d] rounded-xl overflow-hidden shadow-2xl">
+      {/* Header bar */}
+      <div className="bg-[#161b22] px-4 py-3 border-b border-[#30363d] flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-base">
+            🐍
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="font-semibold text-white text-sm">Contribution Snake</h3>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono animate-pulse">
+                LIVE MOVING
+              </span>
+            </div>
+            <p className="text-[11px] text-[#8b949e]">
+              Autonomous snake dynamically glides and eats GitHub contribution dots
+            </p>
+          </div>
+        </div>
+
+        {/* Action Controls */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Theme switcher */}
+          <div className="flex items-center bg-[#21262d] rounded-lg p-0.5 border border-[#30363d] text-xs">
+            <button
+              onClick={() => setTheme('cyan')}
+              className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all ${
+                theme === 'cyan' ? 'bg-[#00d8ff]/20 text-[#00d8ff]' : 'text-[#8b949e] hover:text-white'
+              }`}
+            >
+              Cyan
+            </button>
+            <button
+              onClick={() => setTheme('green')}
+              className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all ${
+                theme === 'green' ? 'bg-[#39d353]/20 text-[#39d353]' : 'text-[#8b949e] hover:text-white'
+              }`}
+            >
+              Green
+            </button>
+            <button
+              onClick={() => setTheme('purple')}
+              className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all ${
+                theme === 'purple' ? 'bg-[#c084fc]/20 text-[#c084fc]' : 'text-[#8b949e] hover:text-white'
+              }`}
+            >
+              Purple
+            </button>
+          </div>
+
+          {/* Speed Toggle */}
+          <div className="flex items-center bg-[#21262d] rounded-lg p-0.5 border border-[#30363d] text-xs">
+            <button
+              onClick={() => setSpeed(110)}
+              className={`px-2 py-1 rounded-md text-[11px] font-mono ${
+                speed === 110 ? 'bg-[#30363d] text-white font-bold' : 'text-[#8b949e]'
+              }`}
+            >
+              1x
+            </button>
+            <button
+              onClick={() => setSpeed(70)}
+              className={`px-2 py-1 rounded-md text-[11px] font-mono ${
+                speed === 70 ? 'bg-[#30363d] text-white font-bold' : 'text-[#8b949e]'
+              }`}
+            >
+              2x
+            </button>
+            <button
+              onClick={() => setSpeed(35)}
+              className={`px-2 py-1 rounded-md text-[11px] font-mono ${
+                speed === 35 ? 'bg-[#30363d] text-white font-bold' : 'text-[#8b949e]'
+              }`}
+            >
+              3x
+            </button>
+          </div>
+
+          {/* Play/Pause */}
+          <button
+            onClick={() => setIsPlaying(!isPlaying)}
+            className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#21262d] hover:bg-[#30363d] text-xs text-white border border-[#30363d] transition-all cursor-pointer"
+            title={isPlaying ? 'Pause Snake' : 'Play Snake'}
+          >
+            {isPlaying ? <Pause className="w-3.5 h-3.5 text-amber-400" /> : <Play className="w-3.5 h-3.5 text-emerald-400" />}
+            <span className="text-[11px]">{isPlaying ? 'Pause' : 'Play'}</span>
+          </button>
+
+          {/* Reset */}
+          <button
+            onClick={resetGame}
+            className="p-1.5 rounded-md bg-[#21262d] hover:bg-[#30363d] text-[#8b949e] hover:text-white border border-[#30363d] transition-all cursor-pointer"
+            title="Reset & Respawn"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+          </button>
+
+          {/* Help button */}
+          <button
+            onClick={() => setShowHowTo(!showHowTo)}
+            className="flex items-center gap-1 px-2 py-1 rounded-md bg-[#1f6feb]/20 hover:bg-[#1f6feb]/30 text-xs text-[#58a6ff] border border-[#1f6feb]/30 transition-all cursor-pointer"
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            <span className="text-[11px]">How to automate on GitHub?</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Guide Accordion */}
+      {showHowTo && (
+        <div className="bg-[#161b22]/95 border-b border-[#30363d] p-4 text-xs space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="font-semibold text-white flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              How to make it animate on your live GitHub Profile:
+            </span>
+            <button
+              onClick={() => setShowHowTo(false)}
+              className="text-[#8b949e] hover:text-white text-xs px-2 py-0.5 rounded bg-[#21262d]"
+            >
+              Close
+            </button>
+          </div>
+          <ol className="list-decimal list-inside space-y-1.5 text-[#c9d1d9] pl-1">
+            <li>
+              <strong className="text-white">Workflow File:</strong> Keep <code className="text-[#58a6ff] bg-[#0d1117] px-1 py-0.5 rounded">.github/workflows/snake.yml</code> in your repository with <code className="text-emerald-400">permissions: contents: write</code>.
+            </li>
+            <li>
+              <strong className="text-white">Enable Permissions:</strong> On GitHub, go to <span className="text-white">Settings &rarr; Actions &rarr; General &rarr; Workflow permissions</span> and select <strong>"Read and write permissions"</strong>.
+            </li>
+            <li>
+              <strong className="text-white">Trigger First Run:</strong> Click the <span className="text-[#58a6ff]">Actions</span> tab in GitHub, select <span className="text-white">"Generate Snake"</span>, and click <strong>"Run workflow"</strong>. The SVG will generate in the <code className="text-[#a371f7]">output</code> branch and start moving immediately on your README!
+            </li>
+          </ol>
+        </div>
+      )}
+
+      {/* Canvas / SVG Grid Container */}
+      <div className="p-4 md:p-6 flex flex-col items-center justify-center bg-[#0d1117] overflow-x-auto">
+        <svg
+          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+          className="w-full max-w-[820px] select-none"
+          style={{ filter: 'drop-shadow(0 4px 20px rgba(0, 0, 0, 0.4))' }}
+        >
+          {/* Background grid */}
+          <g transform="translate(8, 8)">
+            {/* Draw contribution cells */}
+            {grid.map((col, x) =>
+              col.map((level, y) => {
+                const posX = x * (cellWidth + cellGap);
+                const posY = y * (cellWidth + cellGap);
+                const isSnakeBody = snake.some(s => s.x === x && s.y === y);
+                const color = isSnakeBody
+                  ? colorMap.empty
+                  : colorMap.levels[level] || colorMap.empty;
+
+                return (
+                  <rect
+                    key={`${x}-${y}`}
+                    x={posX}
+                    y={posY}
+                    width={cellWidth}
+                    height={cellWidth}
+                    rx="2.5"
+                    ry="2.5"
+                    fill={color}
+                    className="transition-colors duration-200"
+                  />
+                );
+              })
+            )}
+
+            {/* Draw Snake Body segments (back to front) */}
+            {snake.slice().reverse().map((segment, index) => {
+              const segIndex = snake.length - 1 - index;
+              const isHead = segIndex === 0;
+              const posX = segment.x * (cellWidth + cellGap);
+              const posY = segment.y * (cellWidth + cellGap);
+              const opacity = Math.max(0.4, 1 - (segIndex / snake.length) * 0.6);
+              const segmentFill = isHead ? colorMap.head : colorMap.body;
+
+              return (
+                <g key={`snake-${segment.x}-${segment.y}-${segIndex}`}>
+                  {/* Glowing halo for head */}
+                  {isHead && (
+                    <circle
+                      cx={posX + cellWidth / 2}
+                      cy={posY + cellWidth / 2}
+                      r={cellWidth * 0.9}
+                      fill={colorMap.head}
+                      opacity={0.35}
+                      className="animate-pulse"
+                    />
+                  )}
+
+                  {/* Segment rectangle */}
+                  <rect
+                    x={posX}
+                    y={posY}
+                    width={cellWidth}
+                    height={cellWidth}
+                    rx={isHead ? 3.5 : 2.5}
+                    ry={isHead ? 3.5 : 2.5}
+                    fill={segmentFill}
+                    opacity={opacity}
+                  />
+
+                  {/* Eyes on Snake Head */}
+                  {isHead && (
+                    <>
+                      {direction === 'RIGHT' && (
+                        <>
+                          <circle cx={posX + 8} cy={posY + 3.5} r="1.3" fill={colorMap.eye} />
+                          <circle cx={posX + 8} cy={posY + 7.5} r="1.3" fill={colorMap.eye} />
+                        </>
+                      )}
+                      {direction === 'LEFT' && (
+                        <>
+                          <circle cx={posX + 3} cy={posY + 3.5} r="1.3" fill={colorMap.eye} />
+                          <circle cx={posX + 3} cy={posY + 7.5} r="1.3" fill={colorMap.eye} />
+                        </>
+                      )}
+                      {direction === 'DOWN' && (
+                        <>
+                          <circle cx={posX + 3.5} cy={posY + 8} r="1.3" fill={colorMap.eye} />
+                          <circle cx={posX + 7.5} cy={posY + 8} r="1.3" fill={colorMap.eye} />
+                        </>
+                      )}
+                      {direction === 'UP' && (
+                        <>
+                          <circle cx={posX + 3.5} cy={posY + 3} r="1.3" fill={colorMap.eye} />
+                          <circle cx={posX + 7.5} cy={posY + 3} r="1.3" fill={colorMap.eye} />
+                        </>
+                      )}
+                    </>
+                  )}
+                </g>
+              );
+            })}
+          </g>
+
+          {/* Bottom Progress/Palette Bar */}
+          <g transform={`translate(8, ${svgHeight - 16})`}>
+            {/* Progress segment 1: Eaten (Bright / Cyan / Light Green) */}
+            <rect
+              x="0"
+              y="0"
+              width={Math.max(4, ((svgWidth - 16) * eatenPercent) / 100)}
+              height="6"
+              rx="3"
+              fill={colorMap.progress1}
+              className="transition-all duration-300"
+            />
+            {/* Progress segment 2: Active / Medium */}
+            <rect
+              x={Math.max(4, ((svgWidth - 16) * eatenPercent) / 100)}
+              y="0"
+              width={Math.max(0, ((svgWidth - 16) * (100 - eatenPercent)) / 100 * 0.4)}
+              height="6"
+              fill={colorMap.progress2}
+            />
+            {/* Progress segment 3: Remaining / Dark Green */}
+            <rect
+              x={Math.max(4, ((svgWidth - 16) * eatenPercent) / 100) + Math.max(0, ((svgWidth - 16) * (100 - eatenPercent)) / 100 * 0.4)}
+              y="0"
+              width={Math.max(0, (svgWidth - 16) - (Math.max(4, ((svgWidth - 16) * eatenPercent) / 100) + Math.max(0, ((svgWidth - 16) * (100 - eatenPercent)) / 100 * 0.4)))}
+              height="6"
+              rx="3"
+              fill={colorMap.progress3}
+            />
+          </g>
+        </svg>
+      </div>
+
+      {/* Footer stats status line */}
+      <div className="bg-[#161b22] px-4 py-2 border-t border-[#30363d] flex flex-wrap items-center justify-between text-xs text-[#8b949e]">
+        <div className="flex items-center gap-4">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorMap.head }}></span>
+            <span>Dots Eaten: <strong className="text-white font-mono">{eatenCount}</strong></span>
+          </span>
+          <span>
+            Progress: <strong className="text-white font-mono">{eatenPercent}%</strong>
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] text-[#8b949e]">Output Branch:</span>
+          <code className="text-[#a371f7] bg-[#0d1117] px-1.5 py-0.5 rounded text-[10px] font-mono border border-[#30363d]">
+            output/github-contribution-grid-snake-dark.svg
+          </code>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'preview' | 'code' | 'guide'>('preview');
@@ -1117,38 +1646,9 @@ export default function App() {
 
                 <hr className="border-[#30363d]" />
 
-                {/* 8. Contribution Snake Banner (Generated via snake.yml) */}
+                {/* 8. Contribution Snake Banner (Live Moving Animation & Automation Setup) */}
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                      🐍 Contribution Snake
-                    </h2>
-                    <span className="text-xs text-[#a371f7] bg-[#a371f7]/10 px-2 py-1 rounded border border-[#a371f7]/30 font-mono">
-                      .github/workflows/snake.yml
-                    </span>
-                  </div>
-
-                  <div className="bg-[#161b22] p-4 rounded-xl border border-[#30363d] flex flex-col items-center justify-center gap-2">
-                    <img
-                      src="https://raw.githubusercontent.com/Rajdeep123-ops/Rajdeep123-ops/output/github-contribution-grid-snake-dark.svg"
-                      alt="Snake Animation"
-                      onError={(e) => {
-                        // Fallback preview element if GitHub pages branch isn't pushed yet
-                        (e.target as HTMLElement).style.display = 'none';
-                        const parent = (e.target as HTMLElement).parentElement;
-                        if (parent && !parent.querySelector('.snake-placeholder')) {
-                          const placeholder = document.createElement('div');
-                          placeholder.className = 'snake-placeholder text-center p-6 space-y-2';
-                          placeholder.innerHTML = `
-                            <p class="text-sm font-semibold text-[#58a6ff]">🐍 Snake Workflow Configured!</p>
-                            <p class="text-xs text-[#8b949e]">Once you push <code>.github/workflows/snake.yml</code> to GitHub, the snake SVG will render live here automatically.</p>
-                          `;
-                          parent.appendChild(placeholder);
-                        }
-                      }}
-                      className="max-w-full"
-                    />
-                  </div>
+                  <MovingSnakeGrid />
                 </div>
 
                 <hr className="border-[#30363d]" />
