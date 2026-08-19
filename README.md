@@ -363,17 +363,7 @@ Complete DSA Repository
 
 ---
 
-# 📦 Repository Cards
 
-<p align="center">
-
-<a href="https://github.com/Rajdeep123-ops/HiveLogic">
-
-<img src="https://github-readme-stats.vercel.app/api/pin/?username=Rajdeep123-ops&repo=HiveLogic&theme=tokyonight"/>
-
-</a>
-
-</p>
 
 ---
 
